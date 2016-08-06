@@ -2,16 +2,14 @@
 #include <check.h>
 #include "../src/roman_calculator.h"
 
-START_TEST(adding_1s)
-{
+START_TEST(adding_1s) {
   char* sum = add_roman("I", "I");
   ck_assert_str_eq(sum, "II");
   free(sum);
 }
 END_TEST
 
-Suite * roman_calculator_suite(void)
-{
+Suite * roman_calculator_suite(void) {
   Suite *s;
   TCase *tc_core;
 
@@ -26,8 +24,7 @@ Suite * roman_calculator_suite(void)
   return s;
 }
 
-int main(void)
-{
+int failing_tests() {
   int number_failed;
   Suite *s;
   SRunner *sr;
@@ -38,5 +35,10 @@ int main(void)
   srunner_run_all(sr, CK_NORMAL);
   number_failed = srunner_ntests_failed(sr);
   srunner_free(sr);
-  return (number_failed == 0) ? EXIT_SUCCESS : EXIT_FAILURE;
+
+  return number_failed;
+}
+
+int main(void) {
+  return (failing_tests() == 0) ? EXIT_SUCCESS : EXIT_FAILURE;
 }
