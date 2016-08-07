@@ -21,6 +21,13 @@ int char_to_int(char c) {
   return 0;
 }
 
+void insert_expansion(char* destination, char c, unsigned int starting_index) {
+  destination[starting_index+0] = c;
+  destination[starting_index+1] = c;
+  destination[starting_index+2] = c;
+  destination[starting_index+3] = c;
+}
+
 char* expand_abbreviations(char original[]) {
   unsigned int original_length = strlen(original);
   unsigned int new_length = original_length * 3 + 1;
@@ -30,24 +37,15 @@ char* expand_abbreviations(char original[]) {
   unsigned int i;
   for(i = 0; i < original_length; i++) {
     if(original[i] == 'I' && original[i+1] == 'V') {
-      new[j+0] = 'I';
-      new[j+1] = 'I';
-      new[j+2] = 'I';
-      new[j+3] = 'I';
+      insert_expansion(new, 'I', j);
       j += 4;
       i += 1;
     } else if(original[i] == 'X' && original[i+1] == 'L') {
-      new[j+0] = 'X';
-      new[j+1] = 'X';
-      new[j+2] = 'X';
-      new[j+3] = 'X';
+      insert_expansion(new, 'X', j);
       j += 4;
       i += 1;
     } else if(original[i] == 'C' && original[i+1] == 'D') {
-      new[j+0] = 'C';
-      new[j+1] = 'C';
-      new[j+2] = 'C';
-      new[j+3] = 'C';
+      insert_expansion(new, 'C', j);
       j += 4;
       i += 1;
     } else {
