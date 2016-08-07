@@ -105,6 +105,7 @@ Suite * roman_converter_suite(void) {
 
   tcase_add_test(tc_core, the_glyphs);
   tcase_add_test(tc_core, roman_to_arabic);
+  tcase_add_test(tc_core, can_handle_unconventional_numerals);
   tcase_add_test(tc_core, invalid_characters_ignored);
   suite_add_tcase(s, tc_core);
 
