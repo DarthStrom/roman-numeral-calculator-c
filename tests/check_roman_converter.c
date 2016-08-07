@@ -61,6 +61,28 @@ START_TEST(roman_to_arabic) {
 }
 END_TEST
 
+START_TEST(can_handle_unconventional_numerals) {
+  int arabic = 0;
+  arabic = roman_to_int("IIII");
+  ck_assert_int_eq(arabic, 4);
+
+  arabic = roman_to_int("CCCCXXXX");
+  ck_assert_int_eq(arabic, 440);
+
+  arabic = roman_to_int("IIIIII");
+  ck_assert_int_eq(arabic, 6);
+
+  arabic = roman_to_int("XXXXXX");
+  ck_assert_int_eq(arabic, 60);
+
+  arabic = roman_to_int("MDCCCCX");
+  ck_assert_int_eq(arabic, 1910);
+
+  arabic = roman_to_int("DD");
+  ck_assert_int_eq(arabic, 1000);
+}
+END_TEST
+
 START_TEST(invalid_characters_ignored) {
   int arabic = 0;
   arabic = roman_to_int("V?I");
