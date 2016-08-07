@@ -30,7 +30,7 @@ char* int_to_char(int number) {
   char* result = malloc(sizeof(char));
   int base_values[] = { 1000, 500, 100, 50, 10, 5, 1 };
   char glyphs[] = "MDCLXVI";
-  int num_glyphs = sizeof(glyphs) - 1;
+  int num_glyphs = strlen(glyphs);
   assert(sizeof(base_values)/sizeof(int) == num_glyphs);
 
   int glyph_location = 0;
@@ -48,7 +48,12 @@ char* int_to_char(int number) {
   return result;
 }
 
-void insert_expansion(char* destination, char c, unsigned int times, unsigned int* starting_index) {
+void insert_expansion(
+  char* destination,
+  char c,
+  unsigned int times,
+  unsigned int* starting_index)
+{
   unsigned int i;
   for(i = 0; i < times; i++) {
     destination[*starting_index + i] = c;
@@ -94,6 +99,79 @@ char* expand_abbreviations(char original[]) {
   return new;
 }
 
+void insert_abbreviation(
+  char* destination,
+  char* abbreviation,
+  unsigned int* starting_index)
+{
+  unsigned int abbreviation_length = strlen(abbreviation);
+  unsigned int i;
+  for(i = 0; i < abbreviation_length; i++) {
+    destination[*starting_index + i] = abbreviation[i];
+  }
+  *starting_index += abbreviation_length;
+}
+
+char* abbreviate(char original[]) {
+  unsigned int original_length = strlen(original);
+  char* new = calloc(original_length + 1, sizeof(char));
+  unsigned int j = 0;
+
+  unsigned int i;
+  for(i = 0; i < original_length; i++) {
+    if(original[i] == 'D' &&
+    original[i+1] == 'C' &&
+    original[i+2] == 'C' &&
+    original[i+3] == 'C' &&
+    original[i+4] == 'C') {
+      insert_abbreviation(new, "CM", &j);
+      i += 5;
+    } else if(
+    original[i] == 'C' &&
+    original[i+1] == 'C' &&
+    original[i+2] == 'C' &&
+    original[i+3] == 'C') {
+      insert_abbreviation(new, "CD", &j);
+      i += 4;
+    } else if(
+    original[i] == 'L' &&
+    original[i+1] == 'X' &&
+    original[i+2] == 'X' &&
+    original[i+3] == 'X' &&
+    original[i+4] == 'X') {
+      insert_abbreviation(new, "XC", &j);
+      i += 5;
+    } else if(
+    original[i] == 'X' &&
+    original[i+1] == 'X' &&
+    original[i+2] == 'X' &&
+    original[i+3] == 'X') {
+      insert_abbreviation(new, "XL", &j);
+      i += 4;
+    } else if(
+    original[i] == 'V' &&
+    original[i+1] == 'I' &&
+    original[i+2] == 'I' &&
+    original[i+3] == 'I' &&
+    original[i+4] == 'I') {
+      insert_abbreviation(new, "IX", &j);
+      i += 5;
+    } else if(
+    original[i] == 'I' &&
+    original[i+1] == 'I' &&
+    original[i+2] == 'I' &&
+    original[i+3] == 'I') {
+      insert_abbreviation(new, "IV", &j);
+      i += 4;
+    } else {
+      new[j] = original[i];
+      j += 1;
+    }
+  }
+
+  return new;
+}
+
 int tally(char* expanded) {
   int result = 0;
 
@@ -117,7 +195,7 @@ int roman_to_int(char roman[]) {
 
 char* int_to_roman(int arabic) {
   char* result = malloc(sizeof(char) + 1);
-  result = int_to_char(arabic);
+  result = abbreviate(int_to_char(arabic));
 
   return result;
 }
