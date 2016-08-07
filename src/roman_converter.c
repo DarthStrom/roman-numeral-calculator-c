@@ -25,11 +25,12 @@ int char_to_int(char c) {
   return 0;
 }
 
-void insert_expansion(char* destination, char c, unsigned int starting_index) {
+void insert_expansion(char* destination, char c, unsigned int times, unsigned int* starting_index) {
   unsigned int i;
-  for(i = 0; i < ABREVIATION_SIZE; i++) {
-    destination[starting_index + i] = c;
+  for(i = 0; i < times; i++) {
+    destination[*starting_index + i] = c;
   }
+  *starting_index += times;
 }
 
 char* expand_abbreviations(char original[]) {
@@ -41,16 +42,25 @@ char* expand_abbreviations(char original[]) {
   unsigned int i;
   for(i = 0; i < original_length; i++) {
     if(original[i] == 'I' && original[i+1] == 'V') {
-      insert_expansion(new, 'I', j);
-      j += ABREVIATION_SIZE;
+      insert_expansion(new, 'I', ABREVIATION_SIZE, &j);
+      i += 1;
+    } else if(original[i] == 'I' && original[i+1] == 'X') {
+      insert_expansion(new, 'V', 1, &j);
+      insert_expansion(new, 'I', ABREVIATION_SIZE, &j);
       i += 1;
     } else if(original[i] == 'X' && original[i+1] == 'L') {
-      insert_expansion(new, 'X', j);
-      j += ABREVIATION_SIZE;
+      insert_expansion(new, 'X', ABREVIATION_SIZE, &j);
+      i += 1;
+    } else if(original[i] == 'X' && original[i+1] == 'C') {
+      insert_expansion(new, 'L', 1, &j);
+      insert_expansion(new, 'X', ABREVIATION_SIZE, &j);
       i += 1;
     } else if(original[i] == 'C' && original[i+1] == 'D') {
-      insert_expansion(new, 'C', j);
-      j += ABREVIATION_SIZE;
+      insert_expansion(new, 'C', ABREVIATION_SIZE, &j);
+      i += 1;
+    } else if(original[i] == 'C' && original[i+1] == 'M') {
+      insert_expansion(new, 'D', 1, &j);
+      insert_expansion(new, 'C', ABREVIATION_SIZE, &j);
       i += 1;
     } else {
       new[j] = original[i];
