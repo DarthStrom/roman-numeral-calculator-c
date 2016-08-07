@@ -2,39 +2,20 @@
 #include <check.h>
 #include "../src/roman_calculator.h"
 
-START_TEST(empty_strings_count_as_zero) {
-  char* sum = add_roman("", "");
-  ck_assert_str_eq(sum, "");
-  free(sum);
-
-  sum = add_roman("I", "");
-  ck_assert_str_eq(sum, "I");
-  free(sum);
-
-  sum = add_roman("", "II");
-  ck_assert_str_eq(sum, "II");
-  free(sum);
+START_TEST(addition_empty_strings_count_as_zero) {
+  ck_assert_str_eq(add_roman("", ""), "");
+  ck_assert_str_eq(add_roman("I", ""), "I");
+  ck_assert_str_eq(add_roman("", "II"), "II");
 }
 END_TEST
 
-START_TEST(adding_1s) {
-  char* sum = add_roman("I", "I");
-  ck_assert_str_eq(sum, "II");
-  free(sum);
-}
-END_TEST
-
-START_TEST(one_plus_two) {
-  char* sum = add_roman("I", "II");
-  ck_assert_str_eq(sum, "III");
-  free(sum);
-}
-END_TEST
-
-START_TEST(two_plus_two) {
-  char* sum = add_roman("II", "II");
-  ck_assert_str_eq(sum, "IV");
-  free(sum);
+START_TEST(addition) {
+  ck_assert_str_eq(add_roman("I", "I"), "II");
+  ck_assert_str_eq(add_roman("I", "II"), "III");
+  ck_assert_str_eq(add_roman("II", "II"), "IV");
+  ck_assert_str_eq(add_roman("XX", "II"), "XXII");
+  ck_assert_str_eq(add_roman("XIV", "LX"), "LXXIV");
+  ck_assert_str_eq(add_roman("D", "D"), "M");
 }
 END_TEST
 
@@ -47,10 +28,8 @@ Suite * roman_calculator_suite(void) {
   /* Core test case */
   tc_core = tcase_create("Core");
 
-  tcase_add_test(tc_core, empty_strings_count_as_zero);
-  tcase_add_test(tc_core, adding_1s);
-  tcase_add_test(tc_core, one_plus_two);
-  tcase_add_test(tc_core, two_plus_two);
+  tcase_add_test(tc_core, addition_empty_strings_count_as_zero);
+  tcase_add_test(tc_core, addition);
   suite_add_tcase(s, tc_core);
 
   return s;
