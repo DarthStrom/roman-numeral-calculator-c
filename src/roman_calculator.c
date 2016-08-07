@@ -1,10 +1,9 @@
-#include <assert.h>
 #include "roman_calculator.h"
 
 char* add_roman(char a[], char b[]) {
-  char* result = malloc(strlen(a) + strlen(b) + 1);
-  assert(result != NULL);
-  strcpy(result, a);
-  strcat(result, b);
-  return result;
+  int x = roman_to_int(a);
+  int y = roman_to_int(b);
+  int sum = x + y;
+
+  return int_to_roman(sum);
 }

@@ -2,6 +2,7 @@
 #define ROMAN_CALCULATOR_H
 
 #include <string.h>
+#include "roman_converter.h"
 
 // Returns a new char* representing the roman numeral of the sum of the roman
 // numerals a and b.
