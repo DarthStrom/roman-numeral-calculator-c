@@ -31,6 +31,9 @@ START_TEST(roman_to_arabic) {
   int arabic = 0;
   arabic = roman_to_int("II");
   ck_assert_int_eq(arabic, 2);
+
+  arabic = roman_to_int("MDCLXVI");
+  ck_assert_int_eq(arabic, 1666);
 }
 END_TEST
 

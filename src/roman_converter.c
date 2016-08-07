@@ -23,7 +23,7 @@ int char_to_int(char c) {
 int roman_to_int(char roman[]) {
   int result = 0;
 
-  int i;
+  unsigned int i;
   for(i = 0; i < strlen(roman); i++) {
     result += char_to_int(roman[i]);
   }
