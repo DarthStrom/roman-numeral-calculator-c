@@ -19,6 +19,19 @@ START_TEST(addition) {
 }
 END_TEST
 
+START_TEST(subtraction) {
+  ck_assert_str_eq(subtract_roman("", ""), "");
+  ck_assert_str_eq(subtract_roman("I", ""), "I");
+  ck_assert_str_eq(subtract_roman("II", ""), "II");
+  ck_assert_str_eq(subtract_roman("I", "I"), "");
+  ck_assert_str_eq(subtract_roman("II", "I"), "I");
+  ck_assert_str_eq(subtract_roman("II", "II"), "");
+  ck_assert_str_eq(subtract_roman("XX", "II"), "XVIII");
+  ck_assert_str_eq(subtract_roman("LX", "XIV"), "XLVI");
+  ck_assert_str_eq(subtract_roman("M", "D"), "D");
+}
+END_TEST
+
 Suite * roman_calculator_suite(void) {
   Suite *s;
   TCase *tc_core;
@@ -30,6 +43,7 @@ Suite * roman_calculator_suite(void) {
 
   tcase_add_test(tc_core, addition_empty_strings_count_as_zero);
   tcase_add_test(tc_core, addition);
+  tcase_add_test(tc_core, subtraction);
   suite_add_tcase(s, tc_core);
 
   return s;
