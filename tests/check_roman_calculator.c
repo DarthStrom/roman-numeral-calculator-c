@@ -31,6 +31,13 @@ START_TEST(one_plus_two) {
 }
 END_TEST
 
+// START_TEST(two_plus_two) {
+//   char* sum = add_roman("II", "II");
+//   ck_assert_str_eq(sum, "IV");
+//   free(sum);
+// }
+// END_TEST
+
 Suite * roman_calculator_suite(void) {
   Suite *s;
   TCase *tc_core;
@@ -43,17 +50,16 @@ Suite * roman_calculator_suite(void) {
   tcase_add_test(tc_core, empty_strings_count_as_zero);
   tcase_add_test(tc_core, adding_1s);
   tcase_add_test(tc_core, one_plus_two);
+  // tcase_add_test(tc_core, two_plus_two);
   suite_add_tcase(s, tc_core);
 
   return s;
 }
 
-int failing_tests() {
+int failing_tests(Suite* s) {
   int number_failed;
-  Suite *s;
   SRunner *sr;
 
-  s = roman_calculator_suite();
   sr = srunner_create(s);
 
   srunner_run_all(sr, CK_NORMAL);
@@ -64,5 +70,6 @@ int failing_tests() {
 }
 
 int main(void) {
-  return (failing_tests() == 0) ? EXIT_SUCCESS : EXIT_FAILURE;
+  Suite* s = roman_calculator_suite();
+  return (failing_tests(s) == 0) ? EXIT_SUCCESS : EXIT_FAILURE;
 }
