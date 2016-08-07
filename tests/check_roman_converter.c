@@ -2,7 +2,7 @@
 #include <check.h>
 #include "../src/roman_converter.h"
 
-START_TEST(the_glyphs) {
+START_TEST(roman_to_arabic_glyphs) {
   ck_assert_int_eq(roman_to_int("I"), 1);
   ck_assert_int_eq(roman_to_int("V"), 5);
   ck_assert_int_eq(roman_to_int("X"), 10);
@@ -27,7 +27,7 @@ START_TEST(roman_to_arabic) {
 }
 END_TEST
 
-START_TEST(can_handle_unconventional_numerals) {
+START_TEST(roman_to_arabic_can_handle_unconventional_numerals) {
   ck_assert_int_eq(roman_to_int("IIII"), 4);
   ck_assert_int_eq(roman_to_int("CCCCXXXX"), 440);
   ck_assert_int_eq(roman_to_int("IIIIII"), 6);
@@ -37,7 +37,7 @@ START_TEST(can_handle_unconventional_numerals) {
 }
 END_TEST
 
-START_TEST(invalid_characters_ignored) {
+START_TEST(roman_to_arabic_invalid_characters_ignored) {
   ck_assert_int_eq(roman_to_int("V?I"), 6);
 
   char just_a_null[] = {'\0'};
@@ -45,7 +45,7 @@ START_TEST(invalid_characters_ignored) {
 }
 END_TEST
 
-START_TEST(arabic_to_roman) {
+START_TEST(arabic_to_roman_glyphs) {
   ck_assert_str_eq(int_to_roman(1), "I");
   ck_assert_str_eq(int_to_roman(5), "V");
   ck_assert_str_eq(int_to_roman(10), "X");
@@ -65,11 +65,11 @@ Suite * roman_converter_suite(void) {
   /* Core test case */
   tc_core = tcase_create("Core");
 
-  tcase_add_test(tc_core, the_glyphs);
+  tcase_add_test(tc_core, roman_to_arabic_glyphs);
   tcase_add_test(tc_core, roman_to_arabic);
-  tcase_add_test(tc_core, can_handle_unconventional_numerals);
-  tcase_add_test(tc_core, invalid_characters_ignored);
-  tcase_add_test(tc_core, arabic_to_roman);
+  tcase_add_test(tc_core, roman_to_arabic_can_handle_unconventional_numerals);
+  tcase_add_test(tc_core, roman_to_arabic_invalid_characters_ignored);
+  tcase_add_test(tc_core, arabic_to_roman_glyphs);
   suite_add_tcase(s, tc_core);
 
   return s;
