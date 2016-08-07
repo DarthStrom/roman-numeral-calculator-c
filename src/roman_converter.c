@@ -23,8 +23,8 @@ int char_to_int(char c) {
 
 char* expand_abbreviations(char original[]) {
   unsigned int original_length = strlen(original);
-  unsigned int new_length = original_length * 3;
-  char* new = malloc(new_length);
+  unsigned int new_length = original_length * 3 + 1;
+  char* new = calloc(new_length, sizeof(char));
   unsigned int j = 0;
 
   unsigned int i;
@@ -45,16 +45,20 @@ char* expand_abbreviations(char original[]) {
   return new;
 }
 
-int roman_to_int(char roman[]) {
+int tally(char* expanded) {
   int result = 0;
-
-  char* expanded = expand_abbreviations(roman);
 
   unsigned int i;
   for(i = 0; i < strlen(expanded); i++) {
     result += char_to_int(expanded[i]);
   }
 
+  return result;
+}
+
+int roman_to_int(char roman[]) {
+  char* expanded = expand_abbreviations(roman);
+  int result = tally(expanded);
   free(expanded);
 
   return result;
