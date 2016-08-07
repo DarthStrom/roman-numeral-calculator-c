@@ -36,6 +36,20 @@ char* expand_abbreviations(char original[]) {
       new[j+3] = 'I';
       j += 4;
       i += 1;
+    } else if(original[i] == 'X' && original[i+1] == 'L') {
+      new[j+0] = 'X';
+      new[j+1] = 'X';
+      new[j+2] = 'X';
+      new[j+3] = 'X';
+      j += 4;
+      i += 1;
+    } else if(original[i] == 'C' && original[i+1] == 'D') {
+      new[j+0] = 'C';
+      new[j+1] = 'C';
+      new[j+2] = 'C';
+      new[j+3] = 'C';
+      j += 4;
+      i += 1;
     } else {
       new[j] = original[i];
       j += 1;

@@ -37,6 +37,9 @@ START_TEST(roman_to_arabic) {
 
   arabic = roman_to_int("IV");
   ck_assert_int_eq(arabic, 4);
+
+  arabic = roman_to_int("CDXLIV");
+  ck_assert_int_eq(arabic, 444);
 }
 END_TEST
 
