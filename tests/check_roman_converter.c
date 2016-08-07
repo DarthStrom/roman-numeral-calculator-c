@@ -56,6 +56,11 @@ START_TEST(arabic_to_roman_glyphs) {
 }
 END_TEST
 
+START_TEST(arabic_to_roman) {
+  ck_assert_str_eq(int_to_roman(2), "II");
+}
+END_TEST
+
 Suite * roman_converter_suite(void) {
   Suite *s;
   TCase *tc_core;
@@ -70,6 +75,7 @@ Suite * roman_converter_suite(void) {
   tcase_add_test(tc_core, roman_to_arabic_can_handle_unconventional_numerals);
   tcase_add_test(tc_core, roman_to_arabic_invalid_characters_ignored);
   tcase_add_test(tc_core, arabic_to_roman_glyphs);
+  tcase_add_test(tc_core, arabic_to_roman);
   suite_add_tcase(s, tc_core);
 
   return s;

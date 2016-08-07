@@ -1,5 +1,5 @@
+#include <assert.h>
 #include <stdlib.h>
-#include <stdio.h>
 #include "roman_converter.h"
 
 // private
@@ -26,24 +26,26 @@ int char_to_int(char c) {
   return 0;
 }
 
-char* int_to_char(int i) {
-  if(i == 1) {
-    return "I";
-  } else if(i == 5) {
-    return "V";
-  } else if(i == 10) {
-    return "X";
-  } else if(i == 50) {
-    return "L";
-  } else if(i == 100) {
-    return "C";
-  } else if(i == 500) {
-    return "D";
-  } else if(i == 1000) {
-    return "M";
-  }
+char* int_to_char(int number) {
+  char* result = malloc(sizeof(char));
+  int base_values[] = { 1000, 500, 100, 50, 10, 5, 1 };
+  char glyphs[] = "MDCLXVI";
+  int num_glyphs = sizeof(glyphs) - 1;
+  assert(sizeof(base_values)/sizeof(int) == num_glyphs);
 
-  return "";
+  int glyph_location = 0;
+  int i;
+  for(i = 0; i < num_glyphs; i++) {
+    while(base_values[i] <= number) {
+      number -= base_values[i];
+      result = realloc(result, sizeof(result) + sizeof(char));
+      result[glyph_location] = glyphs[i];
+      glyph_location += 1;
+    }
+  }
+  result[glyph_location] = '\0';
+
+  return result;
 }
 
 void insert_expansion(char* destination, char c, unsigned int times, unsigned int* starting_index) {
