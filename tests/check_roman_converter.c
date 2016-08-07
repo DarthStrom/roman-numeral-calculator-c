@@ -3,94 +3,56 @@
 #include "../src/roman_converter.h"
 
 START_TEST(the_glyphs) {
-  int arabic = 0;
-  arabic = roman_to_int("I");
-  ck_assert_int_eq(arabic, 1);
-
-  arabic = roman_to_int("V");
-  ck_assert_int_eq(arabic, 5);
-
-  arabic = roman_to_int("X");
-  ck_assert_int_eq(arabic, 10);
-
-  arabic = roman_to_int("L");
-  ck_assert_int_eq(arabic, 50);
-
-  arabic = roman_to_int("C");
-  ck_assert_int_eq(arabic, 100);
-
-  arabic = roman_to_int("D");
-  ck_assert_int_eq(arabic, 500);
-
-  arabic = roman_to_int("M");
-  ck_assert_int_eq(arabic, 1000);
+  ck_assert_int_eq(roman_to_int("I"), 1);
+  ck_assert_int_eq(roman_to_int("V"), 5);
+  ck_assert_int_eq(roman_to_int("X"), 10);
+  ck_assert_int_eq(roman_to_int("L"), 50);
+  ck_assert_int_eq(roman_to_int("C"), 100);
+  ck_assert_int_eq(roman_to_int("D"), 500);
+  ck_assert_int_eq(roman_to_int("M"), 1000);
 }
 END_TEST
 
 START_TEST(roman_to_arabic) {
-  int arabic = 0;
-  arabic = roman_to_int("II");
-  ck_assert_int_eq(arabic, 2);
-
-  arabic = roman_to_int("MDCLXVI");
-  ck_assert_int_eq(arabic, 1666);
-
-  arabic = roman_to_int("IV");
-  ck_assert_int_eq(arabic, 4);
-
-  arabic = roman_to_int("CDXLIV");
-  ck_assert_int_eq(arabic, 444);
-
-  arabic = roman_to_int("CMXCIX");
-  ck_assert_int_eq(arabic, 999);
-
-  arabic = roman_to_int("XIV");
-  ck_assert_int_eq(arabic, 14);
-
-  arabic = roman_to_int("LXXIV");
-  ck_assert_int_eq(arabic, 74);
-
-  arabic = roman_to_int("MCMLIV");
-  ck_assert_int_eq(arabic, 1954);
-
-  arabic = roman_to_int("MCMXC");
-  ck_assert_int_eq(arabic, 1990);
-
-  arabic = roman_to_int("MMXIV");
-  ck_assert_int_eq(arabic, 2014);
+  ck_assert_int_eq(roman_to_int("II"), 2);
+  ck_assert_int_eq(roman_to_int("MDCLXVI"), 1666);
+  ck_assert_int_eq(roman_to_int("IV"), 4);
+  ck_assert_int_eq(roman_to_int("CDXLIV"), 444);
+  ck_assert_int_eq(roman_to_int("CMXCIX"), 999);
+  ck_assert_int_eq(roman_to_int("XIV"), 14);
+  ck_assert_int_eq(roman_to_int("LXXIV"), 74);
+  ck_assert_int_eq(roman_to_int("MCMLIV"), 1954);
+  ck_assert_int_eq(roman_to_int("MCMXC"), 1990);
+  ck_assert_int_eq(roman_to_int("MMXIV"), 2014);
 }
 END_TEST
 
 START_TEST(can_handle_unconventional_numerals) {
-  int arabic = 0;
-  arabic = roman_to_int("IIII");
-  ck_assert_int_eq(arabic, 4);
-
-  arabic = roman_to_int("CCCCXXXX");
-  ck_assert_int_eq(arabic, 440);
-
-  arabic = roman_to_int("IIIIII");
-  ck_assert_int_eq(arabic, 6);
-
-  arabic = roman_to_int("XXXXXX");
-  ck_assert_int_eq(arabic, 60);
-
-  arabic = roman_to_int("MDCCCCX");
-  ck_assert_int_eq(arabic, 1910);
-
-  arabic = roman_to_int("DD");
-  ck_assert_int_eq(arabic, 1000);
+  ck_assert_int_eq(roman_to_int("IIII"), 4);
+  ck_assert_int_eq(roman_to_int("CCCCXXXX"), 440);
+  ck_assert_int_eq(roman_to_int("IIIIII"), 6);
+  ck_assert_int_eq(roman_to_int("XXXXXX"), 60);
+  ck_assert_int_eq(roman_to_int("MDCCCCX"), 1910);
+  ck_assert_int_eq(roman_to_int("DD"), 1000);
 }
 END_TEST
 
 START_TEST(invalid_characters_ignored) {
-  int arabic = 0;
-  arabic = roman_to_int("V?I");
-  ck_assert_int_eq(arabic, 6);
+  ck_assert_int_eq(roman_to_int("V?I"), 6);
 
   char just_a_null[] = {'\0'};
-  arabic = roman_to_int(just_a_null);
-  ck_assert_int_eq(arabic, 0);
+  ck_assert_int_eq(roman_to_int(just_a_null), 0);
+}
+END_TEST
+
+START_TEST(arabic_to_roman) {
+  ck_assert_str_eq(int_to_roman(1), "I");
+  ck_assert_str_eq(int_to_roman(5), "V");
+  ck_assert_str_eq(int_to_roman(10), "X");
+  ck_assert_str_eq(int_to_roman(50), "L");
+  ck_assert_str_eq(int_to_roman(100), "C");
+  ck_assert_str_eq(int_to_roman(500), "D");
+  ck_assert_str_eq(int_to_roman(1000), "M");
 }
 END_TEST
 
@@ -107,6 +69,7 @@ Suite * roman_converter_suite(void) {
   tcase_add_test(tc_core, roman_to_arabic);
   tcase_add_test(tc_core, can_handle_unconventional_numerals);
   tcase_add_test(tc_core, invalid_characters_ignored);
+  tcase_add_test(tc_core, arabic_to_roman);
   suite_add_tcase(s, tc_core);
 
   return s;

@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdio.h>
 #include "roman_converter.h"
 
 // private
@@ -23,6 +24,26 @@ int char_to_int(char c) {
   }
 
   return 0;
+}
+
+char* int_to_char(int i) {
+  if(i == 1) {
+    return "I";
+  } else if(i == 5) {
+    return "V";
+  } else if(i == 10) {
+    return "X";
+  } else if(i == 50) {
+    return "L";
+  } else if(i == 100) {
+    return "C";
+  } else if(i == 500) {
+    return "D";
+  } else if(i == 1000) {
+    return "M";
+  }
+
+  return "";
 }
 
 void insert_expansion(char* destination, char c, unsigned int times, unsigned int* starting_index) {
@@ -88,6 +109,13 @@ int roman_to_int(char roman[]) {
   char* expanded = expand_abbreviations(roman);
   int result = tally(expanded);
   free(expanded);
+
+  return result;
+}
+
+char* int_to_roman(int arabic) {
+  char* result = malloc(sizeof(char) + 1);
+  result = int_to_char(arabic);
 
   return result;
 }
