@@ -2,6 +2,21 @@
 #include <check.h>
 #include "../src/roman_calculator.h"
 
+START_TEST(empty_strings_count_as_zero) {
+  char* sum = add_roman("", "");
+  ck_assert_str_eq(sum, "");
+  free(sum);
+
+  sum = add_roman("I", "");
+  ck_assert_str_eq(sum, "I");
+  free(sum);
+
+  sum = add_roman("", "II");
+  ck_assert_str_eq(sum, "II");
+  free(sum);
+}
+END_TEST
+
 START_TEST(adding_1s) {
   char* sum = add_roman("I", "I");
   ck_assert_str_eq(sum, "II");
@@ -18,6 +33,7 @@ Suite * roman_calculator_suite(void) {
   /* Core test case */
   tc_core = tcase_create("Core");
 
+  tcase_add_test(tc_core, empty_strings_count_as_zero);
   tcase_add_test(tc_core, adding_1s);
   suite_add_tcase(s, tc_core);
 
