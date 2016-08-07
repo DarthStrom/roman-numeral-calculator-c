@@ -27,7 +27,7 @@ int char_to_int(char c) {
 }
 
 char* int_to_char(int number) {
-  char* result = malloc(sizeof(char));
+  char* result = malloc(sizeof(char) * 15);
   int base_values[] = { 1000, 500, 100, 50, 10, 5, 1 };
   char glyphs[] = "MDCLXVI";
   int num_glyphs = strlen(glyphs);
@@ -38,7 +38,6 @@ char* int_to_char(int number) {
   for(i = 0; i < num_glyphs; i++) {
     while(base_values[i] <= number) {
       number -= base_values[i];
-      result = realloc(result, sizeof(result) + sizeof(char));
       result[glyph_location] = glyphs[i];
       glyph_location += 1;
     }
@@ -119,50 +118,51 @@ char* abbreviate(char original[]) {
 
   unsigned int i;
   for(i = 0; i < original_length; i++) {
-    if(original[i] == 'D' &&
+    if(
+    original[i+0] == 'D' &&
     original[i+1] == 'C' &&
     original[i+2] == 'C' &&
     original[i+3] == 'C' &&
     original[i+4] == 'C') {
       insert_abbreviation(new, "CM", &j);
-      i += 5;
+      i += 4;
     } else if(
-    original[i] == 'C' &&
+    original[i+0] == 'C' &&
     original[i+1] == 'C' &&
     original[i+2] == 'C' &&
     original[i+3] == 'C') {
       insert_abbreviation(new, "CD", &j);
-      i += 4;
+      i += 3;
     } else if(
-    original[i] == 'L' &&
+    original[i+0] == 'L' &&
     original[i+1] == 'X' &&
     original[i+2] == 'X' &&
     original[i+3] == 'X' &&
     original[i+4] == 'X') {
       insert_abbreviation(new, "XC", &j);
-      i += 5;
+      i += 4;
     } else if(
-    original[i] == 'X' &&
+    original[i+0] == 'X' &&
     original[i+1] == 'X' &&
     original[i+2] == 'X' &&
     original[i+3] == 'X') {
       insert_abbreviation(new, "XL", &j);
-      i += 4;
+      i += 3;
     } else if(
-    original[i] == 'V' &&
+    original[i+0] == 'V' &&
     original[i+1] == 'I' &&
     original[i+2] == 'I' &&
     original[i+3] == 'I' &&
     original[i+4] == 'I') {
       insert_abbreviation(new, "IX", &j);
-      i += 5;
+      i += 4;
     } else if(
-    original[i] == 'I' &&
+    original[i+0] == 'I' &&
     original[i+1] == 'I' &&
     original[i+2] == 'I' &&
     original[i+3] == 'I') {
       insert_abbreviation(new, "IV", &j);
-      i += 4;
+      i += 3;
     } else {
       new[j] = original[i];
       j += 1;

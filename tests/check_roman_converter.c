@@ -65,6 +65,12 @@ START_TEST(arabic_to_roman) {
   ck_assert_str_eq(int_to_roman(90), "XC");
   ck_assert_str_eq(int_to_roman(400), "CD");
   ck_assert_str_eq(int_to_roman(900), "CM");
+  ck_assert_str_eq(int_to_roman(14), "XIV");
+  ck_assert_str_eq(int_to_roman(74), "LXXIV");
+  ck_assert_str_eq(int_to_roman(1954), "MCMLIV");
+  ck_assert_str_eq(int_to_roman(1990), "MCMXC");
+  ck_assert_str_eq(int_to_roman(2014), "MMXIV");
+
 }
 END_TEST
 
