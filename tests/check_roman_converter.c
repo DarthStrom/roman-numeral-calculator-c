@@ -43,6 +43,21 @@ START_TEST(roman_to_arabic) {
 
   arabic = roman_to_int("CMXCIX");
   ck_assert_int_eq(arabic, 999);
+
+  arabic = roman_to_int("XIV");
+  ck_assert_int_eq(arabic, 14);
+
+  arabic = roman_to_int("LXXIV");
+  ck_assert_int_eq(arabic, 74);
+
+  arabic = roman_to_int("MCMLIV");
+  ck_assert_int_eq(arabic, 1954);
+
+  arabic = roman_to_int("MCMXC");
+  ck_assert_int_eq(arabic, 1990);
+
+  arabic = roman_to_int("MMXIV");
+  ck_assert_int_eq(arabic, 2014);
 }
 END_TEST
 
