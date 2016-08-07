@@ -1,6 +1,10 @@
 #include <stdlib.h>
 #include "roman_converter.h"
 
+// private
+
+static const unsigned int ABREVIATION_SIZE = 4;
+
 int char_to_int(char c) {
   if(c == 'I') {
     return 1;
@@ -22,10 +26,10 @@ int char_to_int(char c) {
 }
 
 void insert_expansion(char* destination, char c, unsigned int starting_index) {
-  destination[starting_index+0] = c;
-  destination[starting_index+1] = c;
-  destination[starting_index+2] = c;
-  destination[starting_index+3] = c;
+  unsigned int i;
+  for(i = 0; i < ABREVIATION_SIZE; i++) {
+    destination[starting_index + i] = c;
+  }
 }
 
 char* expand_abbreviations(char original[]) {
@@ -38,15 +42,15 @@ char* expand_abbreviations(char original[]) {
   for(i = 0; i < original_length; i++) {
     if(original[i] == 'I' && original[i+1] == 'V') {
       insert_expansion(new, 'I', j);
-      j += 4;
+      j += ABREVIATION_SIZE;
       i += 1;
     } else if(original[i] == 'X' && original[i+1] == 'L') {
       insert_expansion(new, 'X', j);
-      j += 4;
+      j += ABREVIATION_SIZE;
       i += 1;
     } else if(original[i] == 'C' && original[i+1] == 'D') {
       insert_expansion(new, 'C', j);
-      j += 4;
+      j += ABREVIATION_SIZE;
       i += 1;
     } else {
       new[j] = original[i];
@@ -67,6 +71,8 @@ int tally(char* expanded) {
 
   return result;
 }
+
+// public
 
 int roman_to_int(char roman[]) {
   char* expanded = expand_abbreviations(roman);
