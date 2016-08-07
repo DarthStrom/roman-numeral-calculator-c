@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include "roman_converter.h"
 
 int char_to_int(char c) {
@@ -20,13 +21,41 @@ int char_to_int(char c) {
   return 0;
 }
 
+char* expand_abbreviations(char original[]) {
+  unsigned int original_length = strlen(original);
+  unsigned int new_length = original_length * 3;
+  char* new = malloc(new_length);
+  unsigned int j = 0;
+
+  unsigned int i;
+  for(i = 0; i < original_length; i++) {
+    if(original[i] == 'I' && original[i+1] == 'V') {
+      new[j+0] = 'I';
+      new[j+1] = 'I';
+      new[j+2] = 'I';
+      new[j+3] = 'I';
+      j += 4;
+      i += 1;
+    } else {
+      new[j] = original[i];
+      j += 1;
+    }
+  }
+
+  return new;
+}
+
 int roman_to_int(char roman[]) {
   int result = 0;
 
+  char* expanded = expand_abbreviations(roman);
+
   unsigned int i;
-  for(i = 0; i < strlen(roman); i++) {
-    result += char_to_int(roman[i]);
+  for(i = 0; i < strlen(expanded); i++) {
+    result += char_to_int(expanded[i]);
   }
+
+  free(expanded);
 
   return result;
 }
