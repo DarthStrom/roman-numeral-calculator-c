@@ -24,6 +24,13 @@ START_TEST(adding_1s) {
 }
 END_TEST
 
+START_TEST(one_plus_two) {
+  char* sum = add_roman("I", "II");
+  ck_assert_str_eq(sum, "III");
+  free(sum);
+}
+END_TEST
+
 Suite * roman_calculator_suite(void) {
   Suite *s;
   TCase *tc_core;
@@ -35,6 +42,7 @@ Suite * roman_calculator_suite(void) {
 
   tcase_add_test(tc_core, empty_strings_count_as_zero);
   tcase_add_test(tc_core, adding_1s);
+  tcase_add_test(tc_core, one_plus_two);
   suite_add_tcase(s, tc_core);
 
   return s;
