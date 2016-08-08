@@ -2,33 +2,45 @@
 #include <check.h>
 #include "../src/roman_calculator.h"
 
+void add_eq(char augend[], char addend[], char expected_sum[]) {
+  char* actual_sum = add_roman(augend, addend);
+  ck_assert_str_eq(actual_sum, expected_sum);
+  free(actual_sum);
+}
+
 START_TEST(addition_empty_strings_count_as_zero) {
-  ck_assert_str_eq(add_roman("", ""), "");
-  ck_assert_str_eq(add_roman("I", ""), "I");
-  ck_assert_str_eq(add_roman("", "II"), "II");
+  add_eq("", "", "");
+  add_eq("I", "", "I");
+  add_eq("", "II", "II");
 }
 END_TEST
 
 START_TEST(addition) {
-  ck_assert_str_eq(add_roman("I", "I"), "II");
-  ck_assert_str_eq(add_roman("I", "II"), "III");
-  ck_assert_str_eq(add_roman("II", "II"), "IV");
-  ck_assert_str_eq(add_roman("XX", "II"), "XXII");
-  ck_assert_str_eq(add_roman("XIV", "LX"), "LXXIV");
-  ck_assert_str_eq(add_roman("D", "D"), "M");
+  add_eq("I", "I", "II");
+  add_eq("I", "II", "III");
+  add_eq("II", "II", "IV");
+  add_eq("XX", "II", "XXII");
+  add_eq("XIV", "LX", "LXXIV");
+  add_eq("D", "D", "M");
 }
 END_TEST
 
+void subtract_eq(char minuend[], char subtrahend[], char expected_difference[]) {
+  char* actual_difference = subtract_roman(minuend, subtrahend);
+  ck_assert_str_eq(actual_difference, expected_difference);
+  free(actual_difference);
+}
+
 START_TEST(subtraction) {
-  ck_assert_str_eq(subtract_roman("", ""), "");
-  ck_assert_str_eq(subtract_roman("I", ""), "I");
-  ck_assert_str_eq(subtract_roman("II", ""), "II");
-  ck_assert_str_eq(subtract_roman("I", "I"), "");
-  ck_assert_str_eq(subtract_roman("II", "I"), "I");
-  ck_assert_str_eq(subtract_roman("II", "II"), "");
-  ck_assert_str_eq(subtract_roman("XX", "II"), "XVIII");
-  ck_assert_str_eq(subtract_roman("LX", "XIV"), "XLVI");
-  ck_assert_str_eq(subtract_roman("M", "D"), "D");
+  subtract_eq("", "", "");
+  subtract_eq("I", "", "I");
+  subtract_eq("II", "", "II");
+  subtract_eq("I", "I", "");
+  subtract_eq("II", "I", "I");
+  subtract_eq("II", "II", "");
+  subtract_eq("XX", "II", "XVIII");
+  subtract_eq("LX", "XIV", "XLVI");
+  subtract_eq("M", "D", "D");
 }
 END_TEST
 

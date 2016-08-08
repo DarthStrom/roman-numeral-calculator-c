@@ -45,31 +45,38 @@ START_TEST(roman_to_arabic_invalid_characters_ignored) {
 }
 END_TEST
 
+void roman_eq(int to_convert, char expected[]) {
+  char* arabic = int_to_roman(to_convert);
+  ck_assert_str_eq(arabic, expected);
+  free(arabic);
+}
+
 START_TEST(arabic_to_roman_glyphs) {
-  ck_assert_str_eq(int_to_roman(1), "I");
-  ck_assert_str_eq(int_to_roman(5), "V");
-  ck_assert_str_eq(int_to_roman(10), "X");
-  ck_assert_str_eq(int_to_roman(50), "L");
-  ck_assert_str_eq(int_to_roman(100), "C");
-  ck_assert_str_eq(int_to_roman(500), "D");
-  ck_assert_str_eq(int_to_roman(1000), "M");
+  roman_eq(1, "I");
+  roman_eq(5, "V");
+  roman_eq(10, "X");
+  roman_eq(50, "L");
+  roman_eq(100, "C");
+  roman_eq(500, "D");
+  roman_eq(1000, "M");
 }
 END_TEST
 
 START_TEST(arabic_to_roman) {
-  ck_assert_str_eq(int_to_roman(2), "II");
-  ck_assert_str_eq(int_to_roman(16), "XVI");
-  ck_assert_str_eq(int_to_roman(4), "IV");
-  ck_assert_str_eq(int_to_roman(9), "IX");
-  ck_assert_str_eq(int_to_roman(40), "XL");
-  ck_assert_str_eq(int_to_roman(90), "XC");
-  ck_assert_str_eq(int_to_roman(400), "CD");
-  ck_assert_str_eq(int_to_roman(900), "CM");
-  ck_assert_str_eq(int_to_roman(14), "XIV");
-  ck_assert_str_eq(int_to_roman(74), "LXXIV");
-  ck_assert_str_eq(int_to_roman(1954), "MCMLIV");
-  ck_assert_str_eq(int_to_roman(1990), "MCMXC");
-  ck_assert_str_eq(int_to_roman(2014), "MMXIV");
+  roman_eq(2, "II");
+  roman_eq(2, "II");
+  roman_eq(16, "XVI");
+  roman_eq(4, "IV");
+  roman_eq(9, "IX");
+  roman_eq(40, "XL");
+  roman_eq(90, "XC");
+  roman_eq(400, "CD");
+  roman_eq(900, "CM");
+  roman_eq(14, "XIV");
+  roman_eq(74, "LXXIV");
+  roman_eq(1954, "MCMLIV");
+  roman_eq(1990, "MCMXC");
+  roman_eq(2014, "MMXIV");
 
 }
 END_TEST

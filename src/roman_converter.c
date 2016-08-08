@@ -194,8 +194,9 @@ int roman_to_int(char roman[]) {
 }
 
 char* int_to_roman(int arabic) {
-  char* result = malloc(sizeof(char) + 1);
-  result = abbreviate(int_to_char(arabic));
-
+  char* expanded = int_to_char(arabic);
+  char* result = abbreviate(expanded);
+  free(expanded);
+  
   return result;
 }
