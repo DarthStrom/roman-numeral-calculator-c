@@ -41,6 +41,7 @@ START_TEST(subtraction) {
   subtract_eq("XX", "II", "XVIII");
   subtract_eq("LX", "XIV", "XLVI");
   subtract_eq("M", "D", "D");
+  subtract_eq("", "I", "-I");
 }
 END_TEST
 

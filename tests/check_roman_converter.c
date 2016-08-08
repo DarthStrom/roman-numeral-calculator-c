@@ -77,7 +77,7 @@ START_TEST(arabic_to_roman) {
   roman_eq(1954, "MCMLIV");
   roman_eq(1990, "MCMXC");
   roman_eq(2014, "MMXIV");
-
+  roman_eq(-13, "-XIII");
 }
 END_TEST
 

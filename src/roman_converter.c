@@ -194,9 +194,14 @@ int roman_to_int(char roman[]) {
 }
 
 char* int_to_roman(int arabic) {
-  char* expanded = int_to_char(arabic);
-  char* result = abbreviate(expanded);
+  char* prefix = arabic < 0 ? "-" : "";
+  char* expanded = int_to_char(abs(arabic));
+  char* postfix = abbreviate(expanded);
+  char* result = malloc(sizeof(prefix) + sizeof(postfix));
+  strcpy(result, prefix);
+  strcat(result, postfix);
   free(expanded);
-  
+  free(postfix);
+
   return result;
 }
