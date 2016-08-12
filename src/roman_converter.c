@@ -62,40 +62,40 @@ void insert_expansion(
 
 char* expand_abbreviations(char original[]) {
   unsigned int original_length = strlen(original);
-  unsigned int new_length = original_length * 3 + 1;
-  char* new = calloc(new_length, sizeof(char));
+  unsigned int expanded_length = original_length * 3 + 1;
+  char* expanded = calloc(expanded_length, sizeof(char));
   unsigned int j = 0;
 
   unsigned int i;
   for(i = 0; i < original_length; i++) {
     if(original[i] == 'I' && original[i+1] == 'V') {
-      insert_expansion(new, 'I', ABREVIATION_SIZE, &j);
+      insert_expansion(expanded, 'I', ABREVIATION_SIZE, &j);
       i += 1;
     } else if(original[i] == 'I' && original[i+1] == 'X') {
-      insert_expansion(new, 'V', 1, &j);
-      insert_expansion(new, 'I', ABREVIATION_SIZE, &j);
+      insert_expansion(expanded, 'V', 1, &j);
+      insert_expansion(expanded, 'I', ABREVIATION_SIZE, &j);
       i += 1;
     } else if(original[i] == 'X' && original[i+1] == 'L') {
-      insert_expansion(new, 'X', ABREVIATION_SIZE, &j);
+      insert_expansion(expanded, 'X', ABREVIATION_SIZE, &j);
       i += 1;
     } else if(original[i] == 'X' && original[i+1] == 'C') {
-      insert_expansion(new, 'L', 1, &j);
-      insert_expansion(new, 'X', ABREVIATION_SIZE, &j);
+      insert_expansion(expanded, 'L', 1, &j);
+      insert_expansion(expanded, 'X', ABREVIATION_SIZE, &j);
       i += 1;
     } else if(original[i] == 'C' && original[i+1] == 'D') {
-      insert_expansion(new, 'C', ABREVIATION_SIZE, &j);
+      insert_expansion(expanded, 'C', ABREVIATION_SIZE, &j);
       i += 1;
     } else if(original[i] == 'C' && original[i+1] == 'M') {
-      insert_expansion(new, 'D', 1, &j);
-      insert_expansion(new, 'C', ABREVIATION_SIZE, &j);
+      insert_expansion(expanded, 'D', 1, &j);
+      insert_expansion(expanded, 'C', ABREVIATION_SIZE, &j);
       i += 1;
     } else {
-      new[j] = original[i];
+      expanded[j] = original[i];
       j += 1;
     }
   }
 
-  return new;
+  return expanded;
 }
 
 void insert_abbreviation(
@@ -113,7 +113,7 @@ void insert_abbreviation(
 
 char* abbreviate(char original[]) {
   unsigned int original_length = strlen(original);
-  char* new = calloc(original_length + 1, sizeof(char));
+  char* abbreviated = calloc(original_length + 1, sizeof(char));
   unsigned int j = 0;
 
   unsigned int i;
@@ -124,14 +124,14 @@ char* abbreviate(char original[]) {
     original[i+2] == 'C' &&
     original[i+3] == 'C' &&
     original[i+4] == 'C') {
-      insert_abbreviation(new, "CM", &j);
+      insert_abbreviation(abbreviated, "CM", &j);
       i += 4;
     } else if(
     original[i+0] == 'C' &&
     original[i+1] == 'C' &&
     original[i+2] == 'C' &&
     original[i+3] == 'C') {
-      insert_abbreviation(new, "CD", &j);
+      insert_abbreviation(abbreviated, "CD", &j);
       i += 3;
     } else if(
     original[i+0] == 'L' &&
@@ -139,14 +139,14 @@ char* abbreviate(char original[]) {
     original[i+2] == 'X' &&
     original[i+3] == 'X' &&
     original[i+4] == 'X') {
-      insert_abbreviation(new, "XC", &j);
+      insert_abbreviation(abbreviated, "XC", &j);
       i += 4;
     } else if(
     original[i+0] == 'X' &&
     original[i+1] == 'X' &&
     original[i+2] == 'X' &&
     original[i+3] == 'X') {
-      insert_abbreviation(new, "XL", &j);
+      insert_abbreviation(abbreviated, "XL", &j);
       i += 3;
     } else if(
     original[i+0] == 'V' &&
@@ -154,22 +154,22 @@ char* abbreviate(char original[]) {
     original[i+2] == 'I' &&
     original[i+3] == 'I' &&
     original[i+4] == 'I') {
-      insert_abbreviation(new, "IX", &j);
+      insert_abbreviation(abbreviated, "IX", &j);
       i += 4;
     } else if(
     original[i+0] == 'I' &&
     original[i+1] == 'I' &&
     original[i+2] == 'I' &&
     original[i+3] == 'I') {
-      insert_abbreviation(new, "IV", &j);
+      insert_abbreviation(abbreviated, "IV", &j);
       i += 3;
     } else {
-      new[j] = original[i];
+      abbreviated[j] = original[i];
       j += 1;
     }
   }
 
-  return new;
+  return abbreviated;
 }
 
 int tally(char* expanded) {
