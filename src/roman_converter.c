@@ -60,6 +60,16 @@ void insert_expansion(
   *starting_index += times;
 }
 
+int is_substitutable_sequence(char* original, unsigned int* at, char* sequence) {
+  int length = strlen(sequence);
+  unsigned int i;
+  for(i = 0; i < strlen(sequence); i++) {
+    if(original[*at+i] != sequence[i]) { return 0; }
+  }
+  *at += length - 1;
+  return 1;
+}
+
 char* expand_abbreviations(char original[]) {
   unsigned int original_length = strlen(original);
   unsigned int expanded_length = original_length * 3 + 1;
@@ -68,27 +78,21 @@ char* expand_abbreviations(char original[]) {
 
   unsigned int i;
   for(i = 0; i < original_length; i++) {
-    if(original[i] == 'I' && original[i+1] == 'V') {
+    if(is_substitutable_sequence(original, &i, "IV")) {
       insert_expansion(expanded, 'I', ABREVIATION_SIZE, &j);
-      i += 1;
-    } else if(original[i] == 'I' && original[i+1] == 'X') {
+    } else if(is_substitutable_sequence(original, &i, "IX")) {
       insert_expansion(expanded, 'V', 1, &j);
       insert_expansion(expanded, 'I', ABREVIATION_SIZE, &j);
-      i += 1;
-    } else if(original[i] == 'X' && original[i+1] == 'L') {
+    } else if(is_substitutable_sequence(original, &i, "XL")) {
       insert_expansion(expanded, 'X', ABREVIATION_SIZE, &j);
-      i += 1;
-    } else if(original[i] == 'X' && original[i+1] == 'C') {
+    } else if(is_substitutable_sequence(original, &i, "XC")) {
       insert_expansion(expanded, 'L', 1, &j);
       insert_expansion(expanded, 'X', ABREVIATION_SIZE, &j);
-      i += 1;
-    } else if(original[i] == 'C' && original[i+1] == 'D') {
+    } else if(is_substitutable_sequence(original, &i, "CD")) {
       insert_expansion(expanded, 'C', ABREVIATION_SIZE, &j);
-      i += 1;
-    } else if(original[i] == 'C' && original[i+1] == 'M') {
+    } else if(is_substitutable_sequence(original, &i, "CM")) {
       insert_expansion(expanded, 'D', 1, &j);
       insert_expansion(expanded, 'C', ABREVIATION_SIZE, &j);
-      i += 1;
     } else {
       expanded[j] = original[i];
       j += 1;
@@ -111,16 +115,6 @@ void insert_abbreviation(
   *starting_index += abbreviation_length;
 }
 
-int is_shortenable_sequence(char* expanded, unsigned int* at, char* sequence) {
-  int length = strlen(sequence);
-  unsigned int i;
-  for(i = 0; i < strlen(sequence); i++) {
-    if(expanded[*at+i] != sequence[i]) { return 0; }
-  }
-  *at += length - 1;
-  return 1;
-}
-
 char* abbreviate(char original[]) {
   unsigned int original_length = strlen(original);
   char* abbreviated = calloc(original_length + 1, sizeof(char));
@@ -128,17 +122,17 @@ char* abbreviate(char original[]) {
 
   unsigned int i;
   for(i = 0; i < original_length; i++) {
-    if(is_shortenable_sequence(original, &i, "DCCCC")) {
+    if(is_substitutable_sequence(original, &i, "DCCCC")) {
       insert_abbreviation(abbreviated, "CM", &j);
-    } else if(is_shortenable_sequence(original, &i, "CCCC")) {
+    } else if(is_substitutable_sequence(original, &i, "CCCC")) {
       insert_abbreviation(abbreviated, "CD", &j);
-    } else if(is_shortenable_sequence(original, &i, "LXXXX")) {
+    } else if(is_substitutable_sequence(original, &i, "LXXXX")) {
       insert_abbreviation(abbreviated, "XC", &j);
-    } else if(is_shortenable_sequence(original, &i, "XXXX")) {
+    } else if(is_substitutable_sequence(original, &i, "XXXX")) {
       insert_abbreviation(abbreviated, "XL", &j);
-    } else if(is_shortenable_sequence(original, &i, "VIIII")) {
+    } else if(is_substitutable_sequence(original, &i, "VIIII")) {
       insert_abbreviation(abbreviated, "IX", &j);
-    } else if(is_shortenable_sequence(original, &i, "IIII")) {
+    } else if(is_substitutable_sequence(original, &i, "IIII")) {
       insert_abbreviation(abbreviated, "IV", &j);
     } else {
       abbreviated[j] = original[i];
