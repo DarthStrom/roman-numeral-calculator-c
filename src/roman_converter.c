@@ -111,6 +111,16 @@ void insert_abbreviation(
   *starting_index += abbreviation_length;
 }
 
+int is_shortenable_sequence(char* expanded, unsigned int* at, char* sequence) {
+  int length = strlen(sequence);
+  unsigned int i;
+  for(i = 0; i < strlen(sequence); i++) {
+    if(expanded[*at+i] != sequence[i]) { return 0; }
+  }
+  *at += length - 1;
+  return 1;
+}
+
 char* abbreviate(char original[]) {
   unsigned int original_length = strlen(original);
   char* abbreviated = calloc(original_length + 1, sizeof(char));
@@ -118,51 +128,18 @@ char* abbreviate(char original[]) {
 
   unsigned int i;
   for(i = 0; i < original_length; i++) {
-    if(
-    original[i+0] == 'D' &&
-    original[i+1] == 'C' &&
-    original[i+2] == 'C' &&
-    original[i+3] == 'C' &&
-    original[i+4] == 'C') {
+    if(is_shortenable_sequence(original, &i, "DCCCC")) {
       insert_abbreviation(abbreviated, "CM", &j);
-      i += 4;
-    } else if(
-    original[i+0] == 'C' &&
-    original[i+1] == 'C' &&
-    original[i+2] == 'C' &&
-    original[i+3] == 'C') {
+    } else if(is_shortenable_sequence(original, &i, "CCCC")) {
       insert_abbreviation(abbreviated, "CD", &j);
-      i += 3;
-    } else if(
-    original[i+0] == 'L' &&
-    original[i+1] == 'X' &&
-    original[i+2] == 'X' &&
-    original[i+3] == 'X' &&
-    original[i+4] == 'X') {
+    } else if(is_shortenable_sequence(original, &i, "LXXXX")) {
       insert_abbreviation(abbreviated, "XC", &j);
-      i += 4;
-    } else if(
-    original[i+0] == 'X' &&
-    original[i+1] == 'X' &&
-    original[i+2] == 'X' &&
-    original[i+3] == 'X') {
+    } else if(is_shortenable_sequence(original, &i, "XXXX")) {
       insert_abbreviation(abbreviated, "XL", &j);
-      i += 3;
-    } else if(
-    original[i+0] == 'V' &&
-    original[i+1] == 'I' &&
-    original[i+2] == 'I' &&
-    original[i+3] == 'I' &&
-    original[i+4] == 'I') {
+    } else if(is_shortenable_sequence(original, &i, "VIIII")) {
       insert_abbreviation(abbreviated, "IX", &j);
-      i += 4;
-    } else if(
-    original[i+0] == 'I' &&
-    original[i+1] == 'I' &&
-    original[i+2] == 'I' &&
-    original[i+3] == 'I') {
+    } else if(is_shortenable_sequence(original, &i, "IIII")) {
       insert_abbreviation(abbreviated, "IV", &j);
-      i += 3;
     } else {
       abbreviated[j] = original[i];
       j += 1;
