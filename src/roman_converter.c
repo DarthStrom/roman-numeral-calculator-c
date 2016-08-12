@@ -61,10 +61,11 @@ void insert_expansion(
 }
 
 int is_substitutable_sequence(char* original, unsigned int* at, char* sequence) {
-  int length = strlen(sequence);
+  unsigned int length = strlen(sequence);
+  unsigned int original_length = strlen(original);
   unsigned int i;
   for(i = 0; i < strlen(sequence); i++) {
-    if(original[*at+i] != sequence[i]) { return 0; }
+    if(*at+i >= original_length || original[*at+i] != sequence[i]) { return 0; }
   }
   *at += length - 1;
   return 1;
